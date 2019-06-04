@@ -18,7 +18,7 @@
 # Normal gem packages can be used outside of bundler; a binstub is created in
 # $out/bin.
 
-{ lib, fetchurl, fetchgit, makeWrapper, git, darwin
+{ pkgs, lib, fetchurl, fetchgit, makeWrapper, git, darwin
 , ruby, bundler
 } @ defs:
 
@@ -89,6 +89,8 @@ stdenv.mkDerivation ((builtins.removeAttrs attrs ["source"]) // {
     ++ lib.optionals (type != "gem") [ bundler ]
     ++ lib.optional stdenv.isDarwin darwin.libobjc
     ++ buildInputs;
+
+  nativeBuildInputs = [ pkgs.buildPackages.ruby ];
 
   #name = builtins.trace (attrs.name or "no attr.name" ) "${namePrefix}${gemName}-${version}";
   name = attrs.name or "${namePrefix}${gemName}-${version}";
