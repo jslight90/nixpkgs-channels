@@ -1,7 +1,7 @@
-{ buildRubyGem, ruby }:
+{ buildRubyGem, buildPackages }:
 
 buildRubyGem rec {
-  inherit ruby;
+  inherit (buildPackages) ruby;
   name = "${gemName}-${version}";
   gemName = "bundler";
   version = "1.17.2";
