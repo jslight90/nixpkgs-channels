@@ -1,4 +1,4 @@
-{ runCommand, lib, fontconfig, fontDirectories }:
+{ stdenv, runCommand, lib, fontconfig, fontDirectories }:
 
 runCommand "fc-cache"
   rec {
@@ -25,7 +25,7 @@ runCommand "fc-cache"
     echo "</fontconfig>" >> fonts.conf
 
     mkdir -p $out
-    fc-cache -sv
+    ${if (stdenv.hostPlatform != stdenv.buildPlatform) then "" else "fc-cache -sv"}
 
     # This is not a cache dir in the normal sense -- it won't be automatically
     # recreated.
