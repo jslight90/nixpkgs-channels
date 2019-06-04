@@ -1,4 +1,4 @@
-{ stdenv, fetchurl, libgpgerror, gnupg, pkgconfig, glib, pth, libassuan
+{ stdenv, fetchurl, libgpgerror, gnupg, pkgconfig, glib, npth, libassuan
 , file, which, ncurses
 , autoreconfHook, fetchpatch
 , git
@@ -25,7 +25,7 @@ stdenv.mkDerivation rec {
   outputBin = "dev"; # gpgme-config; not so sure about gpgme-tool
 
   propagatedBuildInputs =
-    [ libgpgerror glib libassuan pth ]
+    [ libgpgerror glib libassuan npth ]
     ++ lib.optional (qtbase != null) qtbase;
 
   nativeBuildInputs = [ file pkgconfig gnupg autoreconfHook git texinfo ]
