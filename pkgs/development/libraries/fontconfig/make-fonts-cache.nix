@@ -1,4 +1,4 @@
-{ runCommand, lib, fontconfig, fontDirectories }:
+{ stdenv, runCommand, lib, fontconfig, fontDirectories }:
 
 runCommand "fc-cache"
   rec {
@@ -11,7 +11,7 @@ runCommand "fc-cache"
       ${lib.concatStringsSep "\n" (map (font: "<dir>${font}</dir>") fontDirectories)}
     '';
   }
-  ''
+  (if (stdenv.hostPlatform != stdenv.buildPlatform) then "" else ''
     export FONTCONFIG_FILE=$(pwd)/fonts.conf
 
     cat > fonts.conf << EOF
@@ -30,4 +30,4 @@ runCommand "fc-cache"
     # This is not a cache dir in the normal sense -- it won't be automatically
     # recreated.
     rm -f "$out/CACHEDIR.TAG"
-  ''
+  '')
