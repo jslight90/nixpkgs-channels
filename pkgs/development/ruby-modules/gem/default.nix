@@ -83,6 +83,7 @@ stdenv.mkDerivation ((builtins.removeAttrs attrs ["source"]) // {
   inherit dontStrip;
   inherit type;
 
+  nativeBuildInputs = [ ruby ];
   buildInputs = [
     ruby makeWrapper
   ] ++ lib.optionals (type == "git") [ git ]
